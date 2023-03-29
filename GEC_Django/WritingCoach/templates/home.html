@@ -1,0 +1,43 @@
+{% include 'navbar.html' %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function clearTextarea() {
+        $("#output").val("");
+        $("#input-area").val("");
+    }
+</script>
+
+
+{% block content %}
+
+<div class="text-area">
+    <div>
+        <form method="POST" id="input-form">
+            {% csrf_token %}
+            <textarea class="text" id="input-area" name="input-description" placeholder="Enter your text here..." >{{ description }}</textarea>
+            <input type="submit" value="Check" class="button">
+        </form>
+        
+    </div>
+    <div>
+        {% if changed_description %}
+        <form id="output-form">
+            <textarea class="text" id="output">{{ changed_description }}</textarea>
+            <input type="button" value="Clear" id="clear" class="button" onclick="clearTextarea();">
+        </form>
+        {% else %}
+        <form>
+            <textarea class="text" id="empty-output" placeholder="Result"></textarea>
+            <input type="button" value="Clear" class="button" onclick="clearTextarea();">
+        </form>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock content %}
+
+
